@@ -1,0 +1,8 @@
+{
+  "cases": 15,
+  "network": 0,
+  "unexpectedStorage": 0,
+  "sourceSha256": "f98483d5f5017514f82502253c0db5ce2d4ffb7839887aa2cadc22666f5a7f12",
+  "moduleOnlyChange": "script-path URL",
+  "scope": "Synthetic protobuf fixtures; not an iOS or live account test"
+}

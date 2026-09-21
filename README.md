@@ -1,3 +1,13 @@
+# 当前维护状态：原功能保留版候选待发布
+
+2026-09-21 按用户最新要求，重新以所给原模块为准：仅替换脚本来源，审查通过的上游脚本原样保存。候选已准备，必须在 GitHub 实际入库满 24 小时后才开放正式入口。现在不要导入候选模块，其正式脚本链接尚未发布。
+
+新通道维护与审查见 [preserved/MAINTENANCE.md](preserved/MAINTENANCE.md) 和 [preserved/REVIEW.md](preserved/REVIEW.md)。每周一 19:00（Asia/Taipei）审查上游，周二 19:00 核实候选满 24 小时后发布；延迟则保留旧版，不提前。旧模块和脚本暂保持原状，以下说明仅描述旧版，不代表新通道功能。
+
+正式发布后使用 `https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/YouTube-Original-Reviewed.sgmodule`，发布成功前该地址不可用。手机刷新时间由 Shadowrocket 决定。
+
+---
+
 # YouTube Reviewed
 
 Shadowrocket 去广告模块，版本 1.0.1。仓库已公开，无需 GitHub 令牌。使用自己在小火箭中生成的 MITM 证书。
