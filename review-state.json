@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "date": "2026-09-21",
   "upstreamRepo": "Maasea/sgmodule",
   "upstreamCommit": "65075cdb388fc5e3094afd7e7314c67b243f3525",
@@ -16,8 +16,9 @@
     "guide/settings modifications"
   ],
   "deviceValidation": {
-    "privateDownload": false,
     "automaticRefresh": false,
     "adBlocking": false
-  }
+  },
+  "repositoryVisibility": "public",
+  "publicRepositoryApiVerified": true
 }

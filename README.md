@@ -1,45 +1,36 @@
-# YouTube Reviewed Private
+# YouTube Reviewed
 
-供 bark-jie 自用的 Shadowrocket 模块。仓库保持私有。当前版本 1.0.0，2026-09-21。
+Shadowrocket 去广告模块，版本 1.0.1。仓库已公开，无需 GitHub 令牌。使用自己在小火箭中生成的 MITM 证书。
 
-采用 Maasea 原响应脚本的广告过滤算法，保留原模块的 `oad` 拦截；移除后台播放/画中画、翻译、导航/设置修改及播放密钥采集入口。不包含最新上游的第三方播放转发脚本。它不是完整最新版上游的等效替代；去广告效果、私库下载及自动刷新仍待 iPhone/iPad 实测。
+## 安装
 
-## 首次安装
+1. 复制模块地址，到小火箭「配置 → 模块 → ＋」添加并启用：
 
-1. 在 GitHub 登录 bark-jie，创建 **Fine-grained personal access token**。Resource owner 选 bark-jie；Repository access 选 **Only select repositories → youtube-reviewed**；Repository permissions 仅 **Contents → Read-only**，Metadata 的必要只读权限保留。不要选择所有私库或写权限。
-   - 创建入口：https://github.com/settings/personal-access-tokens/new?name=YouTube-ReadOnly&target_name=bark-jie&contents=read&expires_in=366
-   - 默认示例为 366 天，届时需更换。若更重视减少维护，可自行选 No expiration（若账户允许）；泄露后将持续有效，直到撤销。令牌不要发给 Codex、不要放进仓库/下载网址或截图。
-2. 从本次交付文件，或登录 GitHub 后下载本仓库的 `YouTube-Reviewed-Private.sgmodule`，导入 Shadowrocket 模块。首次导入私库不能依赖匿名链接，所以用本地文件。无需另装鉴权模块。
-3. 在这个模块的「编辑参数」里填写 `GitHub只读令牌`。不要把令牌填在脚本参数、主配置正文或分享链接里。
-4. 在小火箭中生成自己的 HTTPS 解密证书，安装到系统并在「证书信任设置」中开启完全信任；开启当前配置的 HTTPS 解密及此模块。不要使用别人提供的证书或私钥。全局路由使用「配置」。停用旧 YouTube 模块以免重复改写。
-5. 连接小火箭后，在外部资源/脚本管理中手动刷新一次脚本。确认下载成功后再打开 YouTube。初次下载可能早于鉴权规则生效而失败，需要在连接后再次刷新；不同版本菜单名称可能不同。若仍显示 404/401，不要把失败当成安装成功，也不要改用带写权限的令牌。
-6. 检查首页、普通视频、Shorts、搜索及 YouTube Music，确认能播放、广告减少。若卡顿或不能播放，先关闭本模块验证恢复。
+   https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/YouTube-Reviewed.sgmodule
 
-## 后续更新
+2. 停用原来的 YouTube 模块，避免重复改写。如果装过本项目的 Private 版本，也停用并换成此链接。
+3. 在当前配置中启用 HTTPS 解密，使用小火箭自己生成的证书；在 iOS 安装描述文件后，到「设置 → 通用 → 关于本机 → 证书信任设置」开启该证书的完全信任。已经完成且证书有效则不用重装。不要使用别人给的证书或私钥。
+4. 全局路由设为「配置」，连接小火箭；必要时手动更新一次外部脚本资源，再重启 YouTube 测试普通视频、Shorts、搜索及 YouTube Music。
 
-脚本来自本私库 `main/scripts/youtube.response.js`。模块设置 `script-update-interval=86400`（一天），实际刷新还受小火箭版本、缓存、联网与资源更新设置影响，并非保证每 24 小时必定执行。私库认证采用精确到本仓库的 Authorization 请求头规则；需要保持模块、证书和连接可用。此方法参考作者实际发布的私库助手，但尚未在你的手机验证。
+不需要填写模块参数、GitHub 令牌或下载本地脚本。如果已生成仅供本模块使用的 GitHub 令牌，可在 GitHub 设置中撤销；没生成则无需处理。
 
-首次本地导入的模块本身**不会因此自动追踪仓库里的模块文件**。日常兼容更新优先只更新同一脚本地址；若必须更改匹配范围、模块规则或证书范围，维护任务会通知你替换模块。不能承诺永远无需操作。
+## 更新与限制
 
-Codex 定时任务检查上游并审查差异，只有通过审查和测试的版本才发布到本仓库；发现第三方转发、账户/播放密钥外传、远程执行、不明混淆或无法核实的变化时保留旧版并通知。定时任务在本机运行，需要电脑开机且 Codex 可运行；不是 GitHub 云端全天候人工审计。客户端刷新与审查任务是两个独立环节。
+脚本从本仓库 main/scripts/youtube.response.js 下载，模块设置 script-update-interval=86400（一天）。实际刷新仍受小火箭版本、缓存、联网及更新设置影响，不能保证每 24 小时必定执行。模块规则本身改变时也需刷新远程模块；维护任务会在需要操作时通知。
 
-## 权限与边界
+Codex 每日检查上游，审查并测试后才发布正常兼容更新；发现可疑变化保留旧版。任务依赖本机 Codex 可运行与联网，不是 GitHub 云端全天候审计。公开可读不代表任何人可修改，写入仍受仓库权限控制；审查也不保证零漏洞。
 
-- 解密主机为 `youtubei.googleapis.com`、`*.googlevideo.com`、`raw.githubusercontent.com`。raw 主机用于私库鉴权，实际解密范围是整个主机；只有本仓库 URL 匹配才注入令牌。不同模块也可能接触同一解密流量，应仅保留信任的模块。
-- 令牌留在手机参数中；若开启小火箭 iCloud 同步，参数可能同步到你的 iCloud。丢失或分享配置时需撤销令牌。
-- 发布的响应脚本不主动联网，只保留广告分类缓存。第三方工具函数虽仍在上游打包代码中，但当前入口没有调用网络函数。审查不是形式化安全证明，不能保证没有遗漏、上游账户不会被入侵、或广告永远可去除。
-- 超过 4 MiB 的响应不交给脚本处理；解析异常时保留原响应。可能有漏广告，避免无限制处理大型响应。
-- 本仓库只放代码和审查记录，不放代理订阅、节点、证书私钥、Cookie、令牌或个人观看数据。
+本版保留原响应脚本的广告过滤算法和原模块 oad 拦截，排除新上游向第三方 Worker 转发播放请求的逻辑，以及播放密钥采集、字幕翻译、后台播放/画中画和导航/设置修改。可能弱于最新版完整上游的去广告效果。15 项合成测试通过，但手机实际广告效果和自动刷新尚未验证。
 
-## 停用与回退
+解密主机仅 youtubei.googleapis.com 和 *.googlevideo.com，不再解密 GitHub 下载主机或注入鉴权头。响应超过 4 MiB 时不处理，解析异常时保留原响应。只保留本地广告分类缓存，当前响应入口不主动联网。
 
-关闭该模块可立即停止它的解密/改写规则。若彻底停用且没有其他用途，可关闭 HTTPS 解密并移除本机证书；GitHub 设置中撤销此只读令牌。回退脚本需把先前审核通过的内容以新提交恢复，不能强制改写历史。
+如出现不能播放或异常，先关闭模块确认是否恢复。彻底停用且证书无其他用途时，可关闭 HTTPS 解密并移除证书。
 
-## 来源与验证
+## 来源和审查
 
-- 上游：https://github.com/Maasea/sgmodule/tree/65075cdb388fc5e3094afd7e7314c67b243f3525
-- 私库鉴权语法参考：https://github.com/LOWERTOP/Shadowrocket-First/blob/main/Private.module
-- 令牌权限说明：https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-- 审查详情：`REVIEW.md`；版本哈希：`review-state.json`；测试：`test-results.json`。
+- 来源：https://github.com/Maasea/sgmodule/tree/65075cdb388fc5e3094afd7e7314c67b243f3525
+- 审查：REVIEW.md；维护约束：MAINTENANCE.md；哈希：review-state.json。
+- 旧文件名 YouTube-Reviewed-Private.sgmodule 仅为兼容入口，内容也已改为无令牌公开版。
+- Apache-2.0，见 LICENSE 和 NOTICE。不是 YouTube、Google、Shadowrocket 或 Maasea 官方发行版。
 
-许可 Apache-2.0，见 LICENSE 和 NOTICE。不是 YouTube、Google、Shadowrocket 或 Maasea 官方发行版。
+仓库只含代码、来源、测试和说明，不应提交令牌、证书、Cookie、代理节点、订阅或个人观看数据。
