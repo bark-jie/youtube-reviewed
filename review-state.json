@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "date": "2026-09-21",
+  "upstreamRepo": "Maasea/sgmodule",
+  "upstreamCommit": "65075cdb388fc5e3094afd7e7314c67b243f3525",
+  "upstreamResponseBlob": "becad8eaa6094c189ea8db6d644de68ac2d66f61",
+  "upstreamResponseSha256": "f98483d5f5017514f82502253c0db5ce2d4ffb7839887aa2cadc22666f5a7f12",
+  "publishedResponseSha256": "c90592f8e921c3e7132a6c4fdc35f337e8a9a410e49ff1868bbec8e176f5b63c",
+  "status": "reviewed-with-restrictions-device-validation-pending",
+  "excluded": [
+    "youtube.request.js",
+    "third-party init-stream.maasea.workers.dev relay",
+    "config/log_event capture",
+    "playback unlocking",
+    "translation",
+    "guide/settings modifications"
+  ],
+  "deviceValidation": {
+    "privateDownload": false,
+    "automaticRefresh": false,
+    "adBlocking": false
+  }
+}

@@ -1,0 +1,14 @@
+YouTube Reviewed Private 1.0.0
+Modified 2026-09-21 for personal use with Shadowrocket.
+Derived from Maasea/sgmodule, Apache License 2.0.
+Source commit: 65075cdb388fc5e3094afd7e7314c67b243f3525
+Source path: Script/Youtube/youtube.response.js
+Source Git blob: becad8eaa6094c189ea8db6d644de68ac2d66f61
+https://github.com/Maasea/sgmodule
+
+Changes: restricted ad-only entry points; removed active playback unlock,
+translation, settings/navigation edits, key collection, config persistence;
+isolated ad cache; exact endpoint dispatch; silent parse-error fallback.
+Third-party playback relay and request script are not distributed.
+See REVIEW.md for the review scope and limitations.
+Not an official YouTube, Google, Shadowrocket or Maasea release.
