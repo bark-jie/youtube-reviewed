@@ -9,13 +9,15 @@ raw_base_url defaults to DEFAULT_BASE (the ruleset/ folder on the main branch of
 so that <raw_base_url>/AI.list is the latest raw AI.list (branch name, no commit hash).
 
 Reads template/Shadowrocket_RuleSet.conf and writes the filled Shadowrocket_RuleSet.conf at the
-repo root (that file is what users import).
+repo root (that file is what users import), plus Shadowrocket_RuleSet_NoGroup.conf: the same
+rules with no proxy groups, every custom rule pointing at PROXY (the node picked on the home page).
 """
 import sys, pathlib, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "template" / "Shadowrocket_RuleSet.conf"
 OUT = ROOT / "Shadowrocket_RuleSet.conf"
+OUT_NOGROUP = ROOT / "Shadowrocket_RuleSet_NoGroup.conf"
 DEFAULT_BASE = "https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/ruleset"
 BACKUP = ROOT / "backup" / "Shadowrocket_Sensitive_AI_HoK.conf"
 PLACEHOLDER = "https://gist.githubusercontent.com/USERNAME/GIST_ID/raw"
@@ -70,6 +72,34 @@ def check_equivalence(conf_text):
     return True
 
 
+NOGROUP_HEADER = """# Shadowrocket config (no proxy groups): original default + the same Sensitive / AI / Honor-of-Kings rules,
+# all sent to PROXY, i.e. the node selected on the Shadowrocket home page.
+"""
+
+
+def make_nogroup(filled):
+    """Same config without [Proxy Group]; custom-group policies become PROXY."""
+    groups = [pol for _, pol in SETS]
+    head, rest = filled.split("[General]\n", 1)
+    general, rest = rest.split("[Proxy Group]\n", 1)
+    _, rest = rest.split("[Rule]\n", 1)
+    custom, default = rest.split("# ==================== Original default rules", 1)
+    out = []
+    for line in custom.splitlines():
+        if line and not line.startswith("#"):
+            a = line.split(",")
+            assert a[2] in groups, f"unexpected policy in custom block: {line}"
+            a[2] = "PROXY"
+            line = ",".join(a)
+        out.append(line)
+    text = (NOGROUP_HEADER + "\n".join(l for l in head.splitlines()[1:] if l.startswith("#") and "proxy groups" not in l.lower())
+            + "\n[General]\n" + general + "[Rule]\n" + "\n".join(out) + "\n# ==================== Original default rules" + default)
+    for g in groups:
+        assert f",{g}" not in text and f"{g} =" not in text, f"group {g} still referenced"
+    assert "[Proxy Group]" not in text
+    return text
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     base = (args[0] if args else DEFAULT_BASE).rstrip("/")
@@ -79,6 +109,8 @@ def main():
     filled = t.replace(PLACEHOLDER, base)
     OUT.write_text(filled, encoding="utf-8")
     print(f"[OK] wrote {OUT.name}")
+    OUT_NOGROUP.write_text(make_nogroup(filled), encoding="utf-8")
+    print(f"[OK] wrote {OUT_NOGROUP.name} (no groups, all custom rules -> PROXY)")
     ok = check_lists()
     check_equivalence(filled)
     if online:

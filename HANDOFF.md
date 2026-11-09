@@ -6,6 +6,7 @@
 规则已经放在公开仓库 `bark-jie/youtube-reviewed` 的 `main` 分支（用户同意公开，并同意清空仓库原来的 YouTube 模块内容，旧内容只在 Git 历史里）。之前打算用私密 Gist，但云端会话的 GitHub 权限建不了 Gist，所以改用仓库。用户不想自己改文件，以后由 Claude 直接改仓库并推送。
 
 - 配置链接（用户导入用）：`https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/Shadowrocket_RuleSet.conf`
+- 无分组版配置链接：`https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/Shadowrocket_RuleSet_NoGroup.conf`
 - 规则集链接：`https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/ruleset/<文件名>`
 - 网址里用分支名 `main`，不要用 commit hash，否则改了文件后 Shadowrocket 拉到的还是旧版本。
 
@@ -17,6 +18,7 @@
 | `ruleset/HonorOfKings.list` | 王者荣耀国际服组规则（60 条） |
 | `template/Shadowrocket_RuleSet.conf` | 配置模板，三行 `RULE-SET` 的网址里有占位符 `https://gist.githubusercontent.com/USERNAME/GIST_ID/raw`（占位符原样保留，脚本靠它定位） |
 | `Shadowrocket_RuleSet.conf` | 由脚本生成的已填网址的配置，用户导入的就是它。不要手改，改模板后重新生成 |
+| `Shadowrocket_RuleSet_NoGroup.conf` | 无分组版，也由脚本生成：同样的规则，去掉 `[Proxy Group]`，自定义规则全部改成 `PROXY`，也就是走主页选中的节点。用户要求保留这个版本，两个版本共用 `ruleset/` 里的规则集 |
 | `backup/Shadowrocket_Sensitive_AI_HoK.conf` | 同样规则全部写在配置里的完整版（备用，也是校验基准） |
 | `tools/fill_and_verify.py` | 填网址并校验：检查列表格式、规则与备用版一致；加 `--online` 时逐个下载 raw 地址并和本地文件比对。不带网址参数时默认用本仓库 main 分支的 `ruleset/` |
 
