@@ -1,0 +1,155 @@
+# Sensitive rule set for Shadowrocket (policy is set in the config: RULE-SET,<url>,Sensitive)
+
+# Epoch Times / 大纪元
+DOMAIN-SUFFIX,epochtimes.com
+DOMAIN-SUFFIX,epochtimes.com.tw
+DOMAIN-SUFFIX,dajiyuan.com
+DOMAIN-SUFFIX,ept.ms
+
+# China Digital Times / 中国数字时代
+DOMAIN-SUFFIX,chinadigitaltimes.net
+
+# Wikipedia and Wikimedia projects
+DOMAIN-SUFFIX,wikipedia.org
+DOMAIN-SUFFIX,wikipedia.com
+DOMAIN-SUFFIX,wikimedia.org
+DOMAIN-SUFFIX,wikimediafoundation.org
+DOMAIN-SUFFIX,wikidata.org
+DOMAIN-SUFFIX,wikinews.org
+DOMAIN-SUFFIX,wikiquote.org
+DOMAIN-SUFFIX,wikisource.org
+DOMAIN-SUFFIX,wiktionary.org
+DOMAIN-SUFFIX,wikibooks.org
+DOMAIN-SUFFIX,wikiversity.org
+DOMAIN-SUFFIX,wikivoyage.org
+DOMAIN-SUFFIX,wikifunctions.org
+DOMAIN-SUFFIX,mediawiki.org
+DOMAIN-SUFFIX,w.wiki
+
+# New York Times
+DOMAIN-SUFFIX,nytimes.com
+DOMAIN-SUFFIX,nyt.com
+DOMAIN-SUFFIX,nyti.ms
+
+# The Guardian
+DOMAIN-SUFFIX,theguardian.com
+DOMAIN-SUFFIX,guardian.co.uk
+DOMAIN-SUFFIX,guim.co.uk
+DOMAIN-SUFFIX,gu.com
+
+# Initium Media / 端传媒
+DOMAIN-SUFFIX,theinitium.com
+
+# China, Hong Kong and Taiwan-focused independent media
+DOMAIN-SUFFIX,rfa.org
+DOMAIN-SUFFIX,voachinese.com
+DOMAIN-SUFFIX,voacantonese.com
+DOMAIN-SUFFIX,voanews.com
+DOMAIN-SUFFIX,hongkongfp.com
+DOMAIN-SUFFIX,twreporter.org
+DOMAIN-SUFFIX,chinafile.com
+DOMAIN-SUFFIX,chinachange.org
+DOMAIN-SUFFIX,chinamediaproject.org
+DOMAIN-SUFFIX,madeinchinajournal.com
+DOMAIN-SUFFIX,bitterwinter.org
+DOMAIN-SUFFIX,secretchina.com
+DOMAIN-SUFFIX,kanzhongguo.com
+DOMAIN-SUFFIX,boxun.com
+DOMAIN-SUFFIX,aboluowang.com
+DOMAIN-SUFFIX,ntdtv.com
+DOMAIN-SUFFIX,matters.town
+DOMAIN-SUFFIX,pincong.rocks
+
+# Major international reporting with substantial China coverage
+DOMAIN-SUFFIX,bbc.com
+DOMAIN-SUFFIX,bbc.co.uk
+DOMAIN-SUFFIX,bbci.co.uk
+DOMAIN-SUFFIX,dw.com
+DOMAIN-SUFFIX,rfi.fr
+DOMAIN-SUFFIX,wsj.com
+DOMAIN-SUFFIX,wsj.net
+DOMAIN-SUFFIX,ft.com
+DOMAIN-SUFFIX,economist.com
+DOMAIN-SUFFIX,bloomberg.com
+DOMAIN-SUFFIX,bloomberg.net
+DOMAIN-SUFFIX,reuters.com
+DOMAIN-SUFFIX,reutersmedia.net
+DOMAIN-SUFFIX,washingtonpost.com
+DOMAIN-SUFFIX,cnn.com
+DOMAIN-SUFFIX,apnews.com
+DOMAIN-SUFFIX,thediplomat.com
+
+# Human rights, press freedom, censorship, Tibet and Xinjiang
+DOMAIN-SUFFIX,hrw.org
+DOMAIN-SUFFIX,amnesty.org
+DOMAIN-SUFFIX,freedomhouse.org
+DOMAIN-SUFFIX,rsf.org
+DOMAIN-SUFFIX,cpj.org
+DOMAIN-SUFFIX,nchrd.org
+DOMAIN-SUFFIX,chrdnet.com
+DOMAIN-SUFFIX,hrichina.org
+DOMAIN-SUFFIX,greatfire.org
+DOMAIN-SUFFIX,citizenlab.ca
+DOMAIN-SUFFIX,uhrp.org
+DOMAIN-SUFFIX,uyghurcongress.org
+DOMAIN-SUFFIX,tibet.net
+DOMAIN-SUFFIX,savetibet.org
+DOMAIN-SUFFIX,freetibet.org
+DOMAIN-SUFFIX,hongkongwatch.org
+DOMAIN-SUFFIX,tiananmenmother.org
+DOMAIN-SUFFIX,chinaaid.org
+DOMAIN-SUFFIX,cecc.gov
+DOMAIN-SUFFIX,uscc.gov
+DOMAIN-SUFFIX,chinalaborwatch.org
+DOMAIN-SUFFIX,clb.org.hk
+DOMAIN-SUFFIX,laogai.org
+DOMAIN-SUFFIX,minghui.org
+DOMAIN-SUFFIX,faluninfo.net
+DOMAIN-SUFFIX,falundafa.org
+
+# Additional publisher / asset domains verified from publisher pages, 2026-09-20.
+DOMAIN-SUFFIX,theepochtimes.com
+DOMAIN-SUFFIX,theepochtimes.ca
+DOMAIN-SUFFIX,epoch.cloud
+DOMAIN-SUFFIX,epochmediagroup.com
+DOMAIN-SUFFIX,ntd.com
+DOMAIN-SUFFIX,vod.brightchat.com
+DOMAIN-SUFFIX,vstudio.brightchat.org
+DOMAIN-SUFFIX,ftchinese.com
+DOMAIN-SUFFIX,ftcenterprise.com
+DOMAIN-SUFFIX,ft-static.com
+DOMAIN-SUFFIX,reutersconnect.com
+DOMAIN-SUFFIX,reutersagency.com
+DOMAIN-SUFFIX,rfi.my
+
+# Added in this version: more China-related reporting, Tibet / Xinjiang / Hong Kong rights groups
+DOMAIN-SUFFIX,mingjingnews.com
+DOMAIN-SUFFIX,inmediahk.net
+DOMAIN-SUFFIX,64tianwang.com
+DOMAIN-SUFFIX,safeguarddefenders.com
+DOMAIN-SUFFIX,hkdc.us
+DOMAIN-SUFFIX,xinjiangpolicefiles.org
+DOMAIN-SUFFIX,shahit.biz
+DOMAIN-SUFFIX,phayul.com
+DOMAIN-SUFFIX,dalailama.com
+
+# Added in this version: web archives (commonly used to read deleted / censored pages)
+DOMAIN-SUFFIX,archive.org
+DOMAIN-SUFFIX,archive.ph
+DOMAIN-SUFFIX,archive.today
+DOMAIN-SUFFIX,archive.is
+
+# Added in this version: censorship-circumvention tool sites
+DOMAIN-SUFFIX,torproject.org
+DOMAIN-SUFFIX,psiphon.ca
+DOMAIN-SUFFIX,getlantern.org
+
+# Added in this version: privacy-focused mail / messaging (delete this block if unwanted)
+DOMAIN-SUFFIX,proton.me
+DOMAIN-SUFFIX,protonmail.com
+DOMAIN-SUFFIX,protonmail.ch
+DOMAIN-SUFFIX,signal.org
+DOMAIN-SUFFIX,whispersystems.org
+DOMAIN-SUFFIX,signal.art
+DOMAIN-SUFFIX,signal.group
+DOMAIN-SUFFIX,signal.me

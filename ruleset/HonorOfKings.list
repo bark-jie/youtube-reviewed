@@ -1,0 +1,77 @@
+# Honor of Kings rule set for Shadowrocket (policy is set in the config: RULE-SET,<url>,Honor-of-Kings)
+
+# Honor of Kings Global: game / SDK hosts carried over from the previous config (no official list published).
+DOMAIN-SUFFIX,sgameglobal.com
+DOMAIN-SUFFIX,honorofkings.com
+DOMAIN-SUFFIX,hok5v5.com
+DOMAIN-SUFFIX,hokglobalgcloud.iegcom.com
+DOMAIN-SUFFIX,gcloudcs.com
+DOMAIN-SUFFIX,gcloudsdk.com
+DOMAIN,hok.intlgame.com
+DOMAIN,hok-lbs.intlgame.com
+DOMAIN,hok-dr.intlgame.com
+DOMAIN,hok-gcloudctrl.iegcom.com
+DOMAIN,hokgcloudv6.iegcom.com
+DOMAIN,atm-broker-tcp-hok.vasdgame.com
+DOMAIN,ios.crashsight.wetest.net
+DOMAIN,cdn.wetest.net
+DOMAIN,reportms.singaporepaya.com
+DOMAIN,hok.singaporepaya.com
+DOMAIN,asia.cschannel.anticheatexpert.com
+DOMAIN,dl.listdl.com
+DOMAIN,rdelivery.tdos.vip
+DOMAIN,down.gamelet.games
+DOMAIN,galileotelemetry.tencent.com
+DOMAIN,sg.galileotelemetry.tencent.com
+DOMAIN,sg.tux.qq.com
+DOMAIN,dlied5.qq.com
+DOMAIN,cgi.connect.qq.com
+DOMAIN,cp-game-dev-api.tiktok.com
+DOMAIN,oalstv-launches.appsflyersdk.com
+DOMAIN,oalstv-inapps.appsflyersdk.com
+# Additional links/assets on the official HoK website; shared endpoints affect other clients too.
+DOMAIN-SUFFIX,midasbuy.com
+DOMAIN,sg-hok.playerinfinite.com
+DOMAIN,sg-gpts.playerinfinite.com
+DOMAIN,hokglobal.onelink.me
+DOMAIN,privacy.proximabeta.com
+DOMAIN,transparencycenter.proximabeta.com
+DOMAIN,eulaforgames.com
+DOMAIN,rumt-sg.com
+DOMAIN,tam.cdn-go.cn
+DOMAIN,cdn-apac.onetrust.com
+DOMAIN,www.levelinfinite.com
+# Tencent HTTPDNS (first 2 IPs); remaining /32 IPs are session-correlated, not permanent server ranges.
+IP-CIDR,43.132.43.43/32,no-resolve
+IP-CIDR,43.132.55.55/32,no-resolve
+IP-CIDR,43.175.103.172/32,no-resolve
+IP-CIDR,43.163.82.195/32,no-resolve
+IP-CIDR,43.134.191.155/32,no-resolve
+IP-CIDR,43.153.233.59/32,no-resolve
+IP-CIDR,54.207.190.232/32,no-resolve
+IP-CIDR,162.62.125.251/32,no-resolve
+# PixUI diagnostic destination observed twice; ownership not verified; keep exact IP only.
+IP-CIDR,30.18.120.11/32,no-resolve
+
+# Added from play log 2026-11-08: game hosts behind other CDNs (Cloudflare / EdgeOne)
+DOMAIN-KEYWORD,sgameglobal
+DOMAIN-KEYWORD,gromelink
+DOMAIN-SUFFIX,globalconnetct.com
+# In-game Tencent iLink (lobby chat / social), exact hosts only
+DOMAIN,game.wechat.com
+DOMAIN,game.sgilinklong.wechat.com
+DOMAIN,sgilinkdns.wechat.com
+# Region latency probe / entry servers seen in the log
+IP-CIDR,52.67.80.199/32,no-resolve
+IP-CIDR,43.159.113.62/32,no-resolve
+# Match / room servers: Tencent Cloud international (IP changes every match).
+# Overrides the config's original "IP-ASN,132203,DIRECT", so other apps' direct-IP
+# connections to Tencent Cloud overseas (e.g. some WeChat traffic) also use this group.
+IP-ASN,132203,no-resolve
+# Tencent's second overseas network (Aceville, AS139341: 43.159.x / 43.174.x ...).
+# Match relay servers on port 10006 and result-screen hosts were seen here (log 2026-11-09).
+IP-ASN,139341,no-resolve
+# Added from shop / events log 2026-11-08 16:31: event & shop images on HoK's Tencent Cloud
+# storage account (bucket names end in -1310456400), and smoba.qq.com (HoK's own domain)
+DOMAIN-KEYWORD,1310456400
+DOMAIN-SUFFIX,smoba.qq.com
