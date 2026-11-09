@@ -52,3 +52,20 @@
 
 ### 分析用户发来的 Shadowrocket 日志（.db）
 日志是 SQLite 数据库（FTS3），表 `logging_content` 的列是 `c0url`（目标主机:端口）、`c1ua`、`c2result`（命中的规则，后面跟 `# 节点名`）、`c3type`（PROXY/DIRECT）、`c4created`（时间）。查询：`select c0url,c1ua,c2result,c3type,c4created from logging_content order by docid`。如果导出的文件只有 4KB、里面没有表，说明是在记录还没结束时导出的，请用户停止记录后重新导出。分析方法：先找出没命中目标组的连接，再按时间和 HoK 的连接对照，判断它是不是游戏发起的。
+
+## YouTube 去广告模块（`youtube/`）
+用户选了「本地运行、固定版本」的方案：模块是用户截图里的旧版 Maasea「Youtube (Music) Enhance」，唯一改动是 `script-path` 指向本仓库的 `youtube/youtube.response.js`（Maasea 原文件的原样副本，Apache 2.0，见 `youtube/NOTICE`）。
+
+- 模块导入链接：`https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/youtube/YouTube-Enhance.sgmodule`
+- **绝不引入作者的 `youtube.request.js`，也不要用作者新版模块的写法。** 新版会把视频加载请求连同解密密钥转发到作者的 Cloudflare Worker（`init-stream.maasea.workers.dev`），按 YouTube 的设计，里面很可能带账号登录凭证。用户明确不接受。
+- `youtube.response.js` 本身目前没有任何外发网络请求，`fetch` 只是工具函数的定义，没有被调用。它会把一些密钥存到手机本地（persistentStore），但不会发出去。
+- 「歌词翻译语言」参数在新脚本里已经不起作用，保留只是为了和用户原版一致。
+
+### 每周检查作者更新
+1. 运行 `python3 youtube/check_update.py <临时目录>`，看第一行 `STATUS`：
+   - `NO_CHANGE`：没有更新，什么都不用做，也不用通知用户。
+   - `TOO_NEW`：作者改了，但改动还不满 `min_age_days`（3 天），下次再看。用于防范作者账号被盗后推送的恶意版本。
+   - `NEEDS_REVIEW`：扫描发现新增风险项（网络请求、新域名、eval、重定向等）。要人工看新旧脚本的差异，并搞清楚每个新增项的用途。只要有一项会把数据发到 YouTube/Google 以外的地方，就**不采用**，并告诉用户原因。
+   - `CANDIDATE_OK`：没有新增风险项，但仍要看一眼报告里的提交说明和差异。
+2. 确认没问题后，运行 `python3 youtube/check_update.py <临时目录> --adopt`（扫描标记过的版本，人工确认后可以手动复制，并更新 `state.json`）。然后提交并推送到 `main`，再提醒用户：Shadowrocket → 配置 → 模块，在这个模块上左滑点「更新」（或者下拉刷新），这样新脚本才会生效。
+3. 同时检查作者的 `YouTube.Enhance.sgmodule` 里匹配规则有没有变化，有用的改动（比如新的广告接口）可以手动合并进本仓库的模块，但不要合并 `youtube.request.js` 相关的部分。

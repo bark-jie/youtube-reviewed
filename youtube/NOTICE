@@ -1,0 +1,11 @@
+youtube/youtube.response.js is an unmodified copy of Script/Youtube/youtube.response.js
+from https://github.com/Maasea/sgmodule (Apache License 2.0, see LICENSE in this folder).
+The pinned upstream commit and file hash are recorded in state.json.
+
+youtube/YouTube-Enhance.sgmodule is the user's copy of Maasea's "Youtube (Music) Enhance"
+module (older layout, local-only). The only change is script-path, which points to the copy
+in this repository so that upstream changes are adopted only after review. The upstream
+request script (youtube.request.js), which relays playback requests to a third-party
+server, is intentionally not used.
+
+Not an official YouTube, Google, Shadowrocket or Maasea release.
