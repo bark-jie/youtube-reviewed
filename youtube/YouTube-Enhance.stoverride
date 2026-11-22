@@ -1,0 +1,35 @@
+name: |-
+  Youtube (Music) Enhance (reviewed, local-only)
+desc: |-
+  适用于 Youtube & Youtube Music。脚本固定为本仓库审查过的版本，只在手机本地运行，不连作者服务器。
+category: |-
+  YouTube
+
+rules:
+  - AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
+  - AND,((DOMAIN,youtubei.googleapis.com),(PROTOCOL,UDP)),REJECT
+
+http:
+
+  mitm:
+    - "*.googlevideo.com"
+    - "youtubei.googleapis.com"
+
+  url-rewrite:
+    - >-
+      ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad - reject-200
+
+  script:
+    - match: ^https:\/\/youtubei\.googleapis\.com\/(youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch))(\?(.*))?$
+      name: "youtube.response"
+      type: response
+      require-body: true
+      max-size: -1
+      binary-mode: true
+      argument: |-
+        {"captionLang":"off","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}
+
+script-providers:
+  "youtube.response":
+    url: https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/youtube/youtube.response.js
+    interval: 86400

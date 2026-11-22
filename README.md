@@ -23,3 +23,9 @@ https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/Shadowrocket_Ru
 ```
 https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/youtube/YouTube-Enhance.sgmodule
 ```
+
+Stash 覆写（同样的模块，Stash → 覆写 → ＋ → 从 URL 安装）：
+
+```
+https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/youtube/YouTube-Enhance.stoverride
+```

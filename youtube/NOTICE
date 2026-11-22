@@ -8,4 +8,7 @@ in this repository so that upstream changes are adopted only after review. The u
 request script (youtube.request.js), which relays playback requests to a third-party
 server, is intentionally not used.
 
+youtube/YouTube-Enhance.stoverride is the same module converted to Stash override format,
+loading the same reviewed script copy from this repository.
+
 Not an official YouTube, Google, Shadowrocket or Maasea release.

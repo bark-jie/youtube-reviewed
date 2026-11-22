@@ -59,6 +59,7 @@
 用户选了「本地运行、固定版本」的方案：模块是用户截图里的旧版 Maasea「Youtube (Music) Enhance」，唯一改动是 `script-path` 指向本仓库的 `youtube/youtube.response.js`（Maasea 原文件的原样副本，Apache 2.0，见 `youtube/NOTICE`）。
 
 - 模块导入链接：`https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/youtube/YouTube-Enhance.sgmodule`
+- Stash 覆写链接：`https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/youtube/YouTube-Enhance.stoverride`（和 sgmodule 同样的规则和脚本，`script-providers` 指向本仓库同一份 `youtube.response.js`，所以采用新脚本时两边同时更新。改 sgmodule 的匹配规则时，要同步改 stoverride。Stash 没有参数界面，参数直接写死在 `argument` 里。写法参照 Script-Hub 转换出的 Stash 覆写，因为 stash.wiki 在云端会话里访问不了，没有对照官方文档；`PROTOCOL,UDP` 规则如果 Stash 报错，可以改成 `NETWORK,UDP` 试试）
 - **绝不引入作者的 `youtube.request.js`，也不要用作者新版模块的写法。** 新版会把视频加载请求连同解密密钥转发到作者的 Cloudflare Worker（`init-stream.maasea.workers.dev`），按 YouTube 的设计，里面很可能带账号登录凭证。用户明确不接受。
 - `youtube.response.js` 本身目前没有任何外发网络请求，`fetch` 只是工具函数的定义，没有被调用。它会把一些密钥存到手机本地（persistentStore），但不会发出去。
 - 「歌词翻译语言」参数在新脚本里已经不起作用，保留只是为了和用户原版一致。
@@ -69,5 +70,5 @@
    - `TOO_NEW`：作者改了，但改动还不满 `min_age_days`（3 天），下次再看。用于防范作者账号被盗后推送的恶意版本。
    - `NEEDS_REVIEW`：扫描发现新增风险项（网络请求、新域名、eval、重定向等）。要人工看新旧脚本的差异，并搞清楚每个新增项的用途。只要有一项会把数据发到 YouTube/Google 以外的地方，就**不采用**，并告诉用户原因。
    - `CANDIDATE_OK`：没有新增风险项，但仍要看一眼报告里的提交说明和差异。
-2. 确认没问题后，运行 `python3 youtube/check_update.py <临时目录> --adopt`（扫描标记过的版本，人工确认后可以手动复制，并更新 `state.json`）。然后提交并推送到 `main`，再提醒用户：Shadowrocket → 配置 → 模块，在这个模块上左滑点「更新」（或者下拉刷新），这样新脚本才会生效。
+2. 确认没问题后，运行 `python3 youtube/check_update.py <临时目录> --adopt`（扫描标记过的版本，人工确认后可以手动复制，并更新 `state.json`）。然后提交并推送到 `main`，再提醒用户：Shadowrocket → 配置 → 模块，在这个模块上左滑点「更新」（或者下拉刷新），这样新脚本才会生效。如果用户也在用 Stash，一并提醒：Stash → 覆写，更新这个覆写（脚本本身也会每天自动拉取一次）。
 3. 同时检查作者的 `YouTube.Enhance.sgmodule` 里匹配规则有没有变化，有用的改动（比如新的广告接口）可以手动合并进本仓库的模块，但不要合并 `youtube.request.js` 相关的部分。
