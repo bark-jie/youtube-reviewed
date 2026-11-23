@@ -37,46 +37,49 @@ proxy-groups:
     proxies:
       - 'Sensitive-SinX'
       - 'Sensitive-G94cloud'
+    interval: -1
   - name: 'AI'
     type: select
     proxies:
       - 'AI-SinX'
       - 'AI-G94cloud'
+    interval: -1
   - name: 'Honor-of-Kings'
     type: select
     proxies:
       - 'Honor-of-Kings-SinX'
       - 'Honor-of-Kings-G94cloud'
+    interval: -1
   - name: 'Sensitive-SinX'
     type: select
     use:
       - 'SinX'
-    lazy: true
+    interval: -1
   - name: 'Sensitive-G94cloud'
     type: select
     use:
       - 'G94cloud'
-    lazy: true
+    interval: -1
   - name: 'AI-SinX'
     type: select
     use:
       - 'SinX'
-    lazy: true
+    interval: -1
   - name: 'AI-G94cloud'
     type: select
     use:
       - 'G94cloud'
-    lazy: true
+    interval: -1
   - name: 'Honor-of-Kings-SinX'
     type: select
     use:
       - 'SinX'
-    lazy: true
+    interval: -1
   - name: 'Honor-of-Kings-G94cloud'
     type: select
     use:
       - 'G94cloud'
-    lazy: true
+    interval: -1
 
 rule-providers:
   rs-Sensitive:

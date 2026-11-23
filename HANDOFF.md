@@ -68,6 +68,7 @@
   - 我们的规则用前插的方式放在机场规则前面；没命中的流量交给机场原配置的规则（用户同意，所以 Stash 和 Shadowrocket 的其他分流不完全一致）。
 - **订阅链接是机密，绝不能进仓库。** Stash 用覆写参数（`arguments`），值只存在手机上，覆写远程更新时会保留。Clash Party 的 YAML 覆写没有参数功能，用户自己在本地副本里把 `PASTE_..._HERE` 换成链接。
 - 订阅链接为空或失效时，对应小组没有节点，会被当成直连（Stash 文档写明，mihomo 同理）。所以参数设为必填；某个机场暂时没有链接时，先填另一个机场的链接。
+- 自动延迟测试已按用户要求关闭：Stash 的 9 个组都是 `interval: -1`，Clash Party 两个订阅的 `health-check.enable: false`。组都是手动选择，测速不会切换节点，只影响 App 里显示的延迟数字；用户需要时在 App 里手动测。
 - `ruleset/clash/*.yaml` 是 `.list` 去掉注释后的 classical YAML 副本，因为不确定 Stash 的 text 格式是否接受 `#` 注释行。
 - Shadowrocket 的 `DEST-PORT` 在 Stash/mihomo 里写作 `DST-PORT`；脚本会检查 `INLINE` 和模板里的 inline 规则保持一致。
 - 2026-11 用户发来的 SinX 配置里，SinX 自带：`ads` 拦截、按服务分组（Claude/ChatGPT/Google 等）、`.mrs` 规则集。我们的规则在它们前面，不冲突。用户的机场配置里有订阅 token 和节点密码，**不要存进仓库，也不要转述**。

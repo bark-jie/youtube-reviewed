@@ -136,14 +136,19 @@ def q(x):
 def groups_yaml(health_key):
     """Each custom group: select between one sub-group per airport; each sub-group: select over that airport's provider."""
     lines = []
+    # All groups are manual select, so automatic latency tests never switch nodes; they only refresh the
+    # numbers shown in the app. The user asked to turn them off: Stash "interval: -1" disables them
+    # (default 600 s); mihomo has no group-level timer unless interval is set, and provider health checks
+    # are disabled below. Manual tests in the app still work.
+    extra = ["    interval: -1"] if health_key == "stash" else []
     for _, pol in SETS:
         lines += [f"  - name: {q(pol)}", "    type: select", "    proxies:"]
         lines += [f"      - {q(pol + '-' + a)}" for a, _, _ in AIRPORTS]
+        lines += extra
     for _, pol in SETS:
         for a, _, _ in AIRPORTS:
             lines += [f"  - name: {q(pol + '-' + a)}", "    type: select", "    use:", f"      - {q(a)}"]
-            if health_key == "lazy":
-                lines += ["    lazy: true"]
+            lines += extra
     return lines
 
 
@@ -188,7 +193,7 @@ def write_overrides():
     st += ["", "proxy-providers:"]
     for a, arg, _ in AIRPORTS:
         st += [f"  {q(a)}:", f"    url: '${{args.{arg}}}'", "    interval: 86400"]
-    st += ["", "proxy-groups:"] + groups_yaml("lazy")
+    st += ["", "proxy-groups:"] + groups_yaml("stash")
     st += ["", "rule-providers:"] + rule_providers_yaml(False)
     st += ["", "rules:"] + rules_yaml()
     STASH_OUT.parent.mkdir(exist_ok=True)
@@ -205,8 +210,7 @@ def write_overrides():
     ]
     for a, arg, _ in AIRPORTS:
         cp += [f"  {q(a)}:", "    type: http", f"    url: {q('PASTE_' + a.upper() + '_SUBSCRIPTION_LINK_HERE')}", "    interval: 86400",
-               "    health-check:", "      enable: true", "      url: https://www.gstatic.com/generate_204",
-               "      interval: 600", "      lazy: true"]
+               "    health-check:", "      enable: false"]
     cp += ["", "+proxy-groups:"] + groups_yaml(None)
     cp += ["", "rule-providers:"] + rule_providers_yaml(True)
     cp += ["", "+rules:"] + rules_yaml()
