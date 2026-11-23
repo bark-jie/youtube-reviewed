@@ -19,6 +19,7 @@
 | `template/Shadowrocket_RuleSet.conf` | 配置模板，三行 `RULE-SET` 的网址里有占位符 `https://gist.githubusercontent.com/USERNAME/GIST_ID/raw`（占位符原样保留，脚本靠它定位） |
 | `Shadowrocket_RuleSet.conf` | 由脚本生成的已填网址的配置，用户导入的就是它。不要手改，改模板后重新生成 |
 | `Shadowrocket_RuleSet_NoGroup.conf` | 无分组版，也由脚本生成：同样的规则，去掉 `[Proxy Group]`，自定义规则全部改成 `PROXY`，也就是走主页选中的节点。用户要求保留这个版本，两个版本共用 `ruleset/` 里的规则集 |
+| `ruleset/clash/*.yaml`、`stash/RuleSet.stoverride`、`clash-party/RuleSet.override.yaml` | 给 Stash / Clash Party 用的规则集副本和覆写，由脚本生成，见下面「Stash / Clash Party 分流覆写」 |
 | `backup/Shadowrocket_Sensitive_AI_HoK.conf` | 同样规则全部写在配置里的完整版（备用，也是校验基准） |
 | `tools/fill_and_verify.py` | 填网址并校验：检查列表格式、规则与备用版一致；加 `--online` 时逐个下载 raw 地址并和本地文件比对。不带网址参数时默认用本仓库 main 分支的 `ruleset/` |
 
@@ -54,6 +55,22 @@
 
 ### 分析用户发来的 Shadowrocket 日志（.db）
 日志是 SQLite 数据库（FTS3），表 `logging_content` 的列是 `c0url`（目标主机:端口）、`c1ua`、`c2result`（命中的规则，后面跟 `# 节点名`）、`c3type`（PROXY/DIRECT）、`c4created`（时间）。查询：`select c0url,c1ua,c2result,c3type,c4created from logging_content order by docid`。如果导出的文件只有 4KB、里面没有表，说明是在记录还没结束时导出的，请用户停止记录后重新导出。分析方法：先找出没命中目标组的连接，再按时间和 HoK 的连接对照，判断它是不是游戏发起的。
+
+## Stash / Clash Party 分流覆写（`stash/`、`clash-party/`）
+用户在 Stash（iPhone）和 Clash Party（Windows）里用的是**机场的托管订阅配置**（第一行 `#SUBSCRIBED`，Stash 每 12 小时整份替换）。所以分组和规则**只能做成覆写**，绝不能改机场配置本身。
+
+- Stash 覆写：`https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/stash/RuleSet.stoverride`
+- Clash Party 覆写：`clash-party/RuleSet.override.yaml`（模板，用户在本地副本里填订阅链接）
+- 两个文件和 `ruleset/clash/*.yaml` 都由 `tools/fill_and_verify.py` 生成，**不要手改**。规则只改 `ruleset/*.list`，再跑脚本。
+- 结构（用户已确认）：
+  - 机场作为 proxy-provider 引入（目前 SinX、G94cloud，在脚本的 `AIRPORTS` 里加减）。
+  - 三个组 Sensitive / AI / Honor-of-Kings，每个组先选「组名-机场」小组，再在小组里选该机场的节点。组和组之间互不影响。不加正则筛选，不写死节点名。
+  - 我们的规则用前插的方式放在机场规则前面；没命中的流量交给机场原配置的规则（用户同意，所以 Stash 和 Shadowrocket 的其他分流不完全一致）。
+- **订阅链接是机密，绝不能进仓库。** Stash 用覆写参数（`arguments`），值只存在手机上，覆写远程更新时会保留。Clash Party 的 YAML 覆写没有参数功能，用户自己在本地副本里把 `PASTE_..._HERE` 换成链接。
+- 订阅链接为空或失效时，对应小组没有节点，会被当成直连（Stash 文档写明，mihomo 同理）。所以参数设为必填；某个机场暂时没有链接时，先填另一个机场的链接。
+- `ruleset/clash/*.yaml` 是 `.list` 去掉注释后的 classical YAML 副本，因为不确定 Stash 的 text 格式是否接受 `#` 注释行。
+- Shadowrocket 的 `DEST-PORT` 在 Stash/mihomo 里写作 `DST-PORT`；脚本会检查 `INLINE` 和模板里的 inline 规则保持一致。
+- 2026-11 用户发来的 SinX 配置里，SinX 自带：`ads` 拦截、按服务分组（Claude/ChatGPT/Google 等）、`.mrs` 规则集。我们的规则在它们前面，不冲突。用户的机场配置里有订阅 token 和节点密码，**不要存进仓库，也不要转述**。
 
 ## YouTube 去广告模块（`youtube/`）
 用户选了「本地运行、固定版本」的方案：模块是用户截图里的旧版 Maasea「Youtube (Music) Enhance」，唯一改动是 `script-path` 指向本仓库的 `youtube/youtube.response.js`（Maasea 原文件的原样副本，Apache 2.0，见 `youtube/NOTICE`）。

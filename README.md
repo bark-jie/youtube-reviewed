@@ -16,6 +16,13 @@ https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/Shadowrocket_Ru
 
 规则改动只改 `ruleset/` 里的文件，手机上到「配置 → 规则集 URL」点更新即可，不要点「更新配置」。维护说明见 [HANDOFF.md](HANDOFF.md)。
 
+## Stash / Clash Party 分流覆写
+
+套在机场订阅配置上的覆写，加入 Sensitive / AI / Honor-of-Kings 三个手动选择的分组，和上面共用同一份规则。订阅链接只填在自己的设备上。
+
+- Stash（覆写 → ＋ → 从 URL 安装）：`https://raw.githubusercontent.com/bark-jie/youtube-reviewed/main/stash/RuleSet.stoverride`
+- Clash Party：`clash-party/RuleSet.override.yaml`，复制内容后在本地填入订阅链接
+
 ## YouTube 去广告模块
 
 本地运行、固定版本的 YouTube 去广告模块（基于 Maasea 的脚本，不连作者服务器）。Shadowrocket → 配置 → 模块 → 右上角 + → 粘贴：
